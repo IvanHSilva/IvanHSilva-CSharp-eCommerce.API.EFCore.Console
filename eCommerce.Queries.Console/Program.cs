@@ -144,12 +144,32 @@ eCommerceContext db = new eCommerceContext()!;
 #endregion
 
 #region AutoInclude
+//db.ChangeTracker.Clear();
+//Console.WriteLine();
+//Console.WriteLine("Lista de usuários com autoinclude:");
+//List<User> users = db.Users!.ToList();
+//foreach (User user in users) {
+//    Console.WriteLine($"{user.Name} - {user.Contact?.CellPhone}");
+//}
+//Console.WriteLine();
+#endregion
+
+#region ExplicitLoad
 db.ChangeTracker.Clear();
 Console.WriteLine();
-Console.WriteLine("Lista de usuários com autoinclude:");
-List<User> users = db.Users!.ToList();
-foreach (User user in users) {
-    Console.WriteLine($"{user.Name} - {user.Contact?.CellPhone}");
+Console.WriteLine("Lista de usuários sem explicit load:");
+User user = db.Users!.IgnoreAutoIncludes().FirstOrDefault(u => u.Id == 1);
+Console.WriteLine($"{user!.Name} - Tel: {user.Contact?.CellPhone} - End: {user.Addresses?.Count}");
+db.Entry(user).Reference(u => u.Contact).Load();
+db.Entry(user).Collection(u => u.Addresses!).Load();
+Console.WriteLine();
+Console.WriteLine("Lista de usuários com explicit load:"); 
+Console.WriteLine($"{user!.Name} - Tel: {user.Contact?.CellPhone} - End: {user.Addresses?.Count}");
+List<Address> addresses = db.Entry(user).Collection(u => u.Addresses!).Query().
+    Where(a => a.State == "SP").ToList();
+Console.WriteLine("Endereços de São Paulo:");
+foreach (Address address in addresses) {
+    Console.WriteLine($"{address.Street}, {address.Number} - {address.District} - {address.City} - {address.State}");
 }
 Console.WriteLine();
 #endregion
