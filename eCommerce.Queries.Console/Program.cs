@@ -114,19 +114,31 @@ eCommerceContext db = new eCommerceContext()!;
 #endregion
 
 #region Include
+//Console.WriteLine();
+//Console.WriteLine("Lista de Usuários com contatos:");
+//List<User> users = db.Users!.Include(u => u.Contact).Include(u => u.Addresses!.Where(a => a.State == "SE")).ToList();
+////int regCount = users.Count;
+//foreach (User user in users) {
+//    Console.WriteLine($"{user.Name}");
+//    if (user.Contact != null) Console.WriteLine($"{user.Contact!.CellPhone}");
+//    Console.WriteLine($"{user.Addresses!.Count} endereço(s) ");
+//    if (user.Addresses!.Count > 0) {
+//        foreach (Address address in user.Addresses) {
+//            Console.WriteLine($"{address.Street}, {address.Number} - {address.District} - {address.City} - {address.State}");
+//        }
+//    }
+//}
+//Console.WriteLine();
+#endregion
+
+#region ThenInclude
 Console.WriteLine();
-Console.WriteLine("Lista de Usuários com contatos:");
-List<User> users = db.Users!.Include(u => u.Contact).Include(u => u.Addresses!.Where(a => a.State == "SE")).ToList();
-//int regCount = users.Count;
-foreach (User user in users) {
-    Console.WriteLine($"{user.Name}");
-    if (user.Contact != null) Console.WriteLine($"{user.Contact!.CellPhone}");
-    Console.WriteLine($"{user.Addresses!.Count} endereço(s) ");
-    if (user.Addresses!.Count > 0) {
-        foreach (Address address in user.Addresses) {
-            Console.WriteLine($"{address.Street}, {address.Number} - {address.District} - {address.City} - {address.State}");
-        }
-    }
+Console.WriteLine("Lista de telefones dos contatos:");
+List<Contact> contacts = db.Contacts!.Include(c => c.User).
+    ThenInclude(u => u!.Addresses).ToList();
+foreach (Contact contact in contacts) {
+    Console.WriteLine($"{contact.CellPhone} - {contact.User!.Name} " +
+        $"/ endereços: {contact.User!.Addresses!.Count}");
 }
 Console.WriteLine();
 #endregion
