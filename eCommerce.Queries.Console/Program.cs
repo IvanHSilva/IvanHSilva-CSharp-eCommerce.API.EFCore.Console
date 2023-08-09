@@ -87,29 +87,46 @@ eCommerceContext db = new eCommerceContext()!;
 #endregion
 
 #region OrderBy
+//Console.WriteLine();
+//Console.WriteLine("Lista de Usuários em ordem alfabética:");
+//List<User> users = db.Users!.OrderBy(u => u.Name).ToList();
+////int regCount = users.Count;
+//foreach (User user in users) {
+//    Console.WriteLine($"{user.Name}");
+//}
+//Console.WriteLine();
+//Console.WriteLine("Lista de Usuários em ordem alfabética inversa:");
+//users = db.Users!.OrderByDescending(u => u.Name).ToList();
+////int regCount = users.Count;
+//foreach (User user in users) {
+//    Console.WriteLine($"{user.Name}");
+//}
+//Console.WriteLine();
+//Console.WriteLine("Lista de Usuários em ordem alfabética por sexo:");
+//users = db.Users!.OrderBy(u => u.Gender).ThenBy(u => u.Name).ToList();
+////int regCount = users.Count;
+////Console.WriteLine("Sexo feminino:");
+//foreach (User user in users) {
+//    //if (user.Gender == "M") Console.WriteLine("Sexo masculino:");
+//    Console.WriteLine($"{user.Name}");
+//}
+//Console.WriteLine();
+#endregion
+
+#region Include
 Console.WriteLine();
-Console.WriteLine("Lista de Usuários em ordem alfabética:");
-List<User> users = db.Users!.OrderBy(u => u.Name).ToList();
+Console.WriteLine("Lista de Usuários com contatos:");
+List<User> users = db.Users!.Include(u => u.Contact).Include(u => u.Addresses!.Where(a => a.State == "SE")).ToList();
 //int regCount = users.Count;
 foreach (User user in users) {
     Console.WriteLine($"{user.Name}");
-}
-Console.WriteLine();
-Console.WriteLine("Lista de Usuários em ordem alfabética inversa:");
-users = db.Users!.OrderByDescending(u => u.Name).ToList();
-//int regCount = users.Count;
-foreach (User user in users) {
-    Console.WriteLine($"{user.Name}");
-}
-Console.WriteLine();
-Console.WriteLine("Lista de Usuários em ordem alfabética por sexo:");
-users = db.Users!.OrderBy(u => u.Gender).ThenBy(u => u.Name).ToList();
-//int regCount = users.Count;
-//Console.WriteLine("Sexo feminino:");
-foreach (User user in users) {
-    //if (user.Gender == "M") Console.WriteLine("Sexo masculino:");
-    Console.WriteLine($"{user.Name}");
+    if (user.Contact != null) Console.WriteLine($"{user.Contact!.CellPhone}");
+    Console.WriteLine($"{user.Addresses!.Count} endereço(s) ");
+    if (user.Addresses!.Count > 0) {
+        foreach (Address address in user.Addresses) {
+            Console.WriteLine($"{address.Street}, {address.Number} - {address.District} - {address.City} - {address.State}");
+        }
+    }
 }
 Console.WriteLine();
 #endregion
-
