@@ -15,5 +15,9 @@ namespace eCommerce.API.Database {
         public DbSet<Contact> Contacts { get; set; } = null!;
         public DbSet<Address> Addresses { get; set; } = null!;
         public DbSet<Department> Departments { get; set; } = null!;
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
+            modelBuilder.Entity<User>().Navigation(u => u.Contact).AutoInclude();
+        }
     }
 }
