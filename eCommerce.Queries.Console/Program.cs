@@ -132,13 +132,24 @@ eCommerceContext db = new eCommerceContext()!;
 #endregion
 
 #region ThenInclude
+//Console.WriteLine();
+//Console.WriteLine("Lista de telefones dos contatos:");
+//List<Contact> contacts = db.Contacts!.Include(c => c.User).
+//    ThenInclude(u => u!.Addresses).ToList();
+//foreach (Contact contact in contacts) {
+//    Console.WriteLine($"{contact.CellPhone} - {contact.User!.Name} " +
+//        $"/ endereços: {contact.User!.Addresses!.Count}");
+//}
+//Console.WriteLine();
+#endregion
+
+#region AutoInclude
+db.ChangeTracker.Clear();
 Console.WriteLine();
-Console.WriteLine("Lista de telefones dos contatos:");
-List<Contact> contacts = db.Contacts!.Include(c => c.User).
-    ThenInclude(u => u!.Addresses).ToList();
-foreach (Contact contact in contacts) {
-    Console.WriteLine($"{contact.CellPhone} - {contact.User!.Name} " +
-        $"/ endereços: {contact.User!.Addresses!.Count}");
+Console.WriteLine("Lista de usuários com autoinclude:");
+List<User> users = db.Users!.ToList();
+foreach (User user in users) {
+    Console.WriteLine($"{user.Name} - {user.Contact?.CellPhone}");
 }
 Console.WriteLine();
 #endregion
