@@ -17,7 +17,7 @@ namespace eCommerce.Models {
 
         // Composition
         // [ForeignKey("UsuId")]
-        public User? User { get; set; }
+        public virtual User? User { get; set; }
 
         // Constructors
         public Contact() { }

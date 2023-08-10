@@ -11,7 +11,7 @@ namespace eCommerce.Models {
         public string Name { get; set; } = string.Empty;
 
         // Composition
-        public ICollection<User>? Users { get; set; }
+        public virtual ICollection<User>? Users { get; set; }
 
         // Constuctors
         public Department() { }

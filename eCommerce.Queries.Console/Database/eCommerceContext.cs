@@ -7,7 +7,7 @@ namespace eCommerce.API.Database {
         // Database Connection without configure enviroment
         string DBConn = "Data Source=SERVIDOR\\SQLSERVER;Initial Catalog=eCommerce;Integrated Security=True;";
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-            optionsBuilder.UseSqlServer(DBConn);
+            optionsBuilder.UseLazyLoadingProxies().UseSqlServer(DBConn);
         }
 
         // DBSets
