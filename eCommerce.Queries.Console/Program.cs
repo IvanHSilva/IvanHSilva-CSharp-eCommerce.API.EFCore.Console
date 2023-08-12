@@ -176,11 +176,19 @@ eCommerceContext db = new eCommerceContext()!;
 #endregion
 
 #region LazyLoad
+//db.ChangeTracker.Clear();
+//Console.WriteLine();
+//Console.WriteLine("Lista de usuários com lazy load:");
+//User user = db.Users!.Find(1);
+//Console.WriteLine($"{user!.Name} - Tel: {user.Contact?.CellPhone} - End: {user.Addresses?.Count}");
+//Console.WriteLine();
+#endregion
+
+#region SplitQuery
 db.ChangeTracker.Clear();
 Console.WriteLine();
-Console.WriteLine("Lista de usuários com lazy load:");
-User user = db.Users!.Find(1);
+Console.WriteLine("Lista de usuários com Split Query:");
+User user = db.Users!.AsSplitQuery().Include(u => u.Addresses).FirstOrDefault(u => u.Id == 1);
 Console.WriteLine($"{user!.Name} - Tel: {user.Contact?.CellPhone} - End: {user.Addresses?.Count}");
 Console.WriteLine();
 #endregion
-

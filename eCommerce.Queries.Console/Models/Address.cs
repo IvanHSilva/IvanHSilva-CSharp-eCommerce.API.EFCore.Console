@@ -27,7 +27,7 @@ namespace eCommerce.Models {
         public string ZipCode { get; set; } = string.Empty;
 
         // Composition
-        public virtual User? User { get; set; }
+        public User? User { get; set; }
 
         // Constructors
         public Address() {}

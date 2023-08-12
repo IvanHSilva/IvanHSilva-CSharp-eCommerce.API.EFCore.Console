@@ -31,9 +31,9 @@ namespace eCommerce.Models {
         public DateTime RegDate { get; set; }
 
         // Composition
-        public virtual Contact? Contact { get; set; }
-        public virtual ICollection<Address>? Addresses { get; set; }
-        public virtual ICollection<Department>? Departments { get; set; }
+        public Contact? Contact { get; set; }
+        public ICollection<Address>? Addresses { get; set; }
+        public ICollection<Department>? Departments { get; set; }
 
         // Constructors
         public User() { }
