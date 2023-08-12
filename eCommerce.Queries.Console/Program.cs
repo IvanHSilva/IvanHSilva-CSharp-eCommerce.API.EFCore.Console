@@ -1,6 +1,8 @@
 ﻿using eCommerce.API.Database;
 using eCommerce.Models;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -206,12 +208,35 @@ eCommerceContext db = new eCommerceContext()!;
 #endregion
 
 #region Select
+//db.ChangeTracker.Clear();
+//Console.WriteLine();
+//Console.WriteLine("Lista de usuários com Select:");
+//List<User> users = db.Users!.Select(u => new User {Id = u.Id, Name = u.Name}).ToList();
+//foreach (User user in users) {
+//    Console.WriteLine($"{user!.Name} - Tel: {user.Contact?.CellPhone}");
+//}
+//Console.WriteLine();
+#endregion
+
+#region SQLRaw
+//db.ChangeTracker.Clear();
+//Console.WriteLine();
+//Console.WriteLine("Lista de usuários com SQL Raw:");
+//SqlParameter parameter = new SqlParameter("@nome", "J%");
+//string command = $"SELECT * FROM Usuarios WHERE Nome LIKE @nome ORDER BY Nome";
+//List<User> users = db.Users!.FromSqlRaw(command, parameter).IgnoreAutoIncludes().ToList();
+//foreach (User user in users) {
+//    Console.WriteLine($"{user!.Name} - {user!.Id}");
+//}
+//Console.WriteLine();
+#endregion
+
+#region ExecuteSQL
 db.ChangeTracker.Clear();
 Console.WriteLine();
-Console.WriteLine("Lista de usuários com Select:");
-List<User> users = db.Users!.Select(u => new User {Id = u.Id, Name = u.Name}).ToList();
-foreach (User user in users) {
-    Console.WriteLine($"{user!.Name} - Tel: {user.Contact?.CellPhone}");
-}
+Console.WriteLine("Alterações com Execute SQL:");
+SqlParameter parameter = new SqlParameter("@nome", "Elivelton Costa Santiago");
+string command = $"UPDATE Usuarios SET Nome = @nome WHERE Id = 5";
+db.Database.ExecuteSqlRaw(command, parameter);
 Console.WriteLine();
 #endregion
