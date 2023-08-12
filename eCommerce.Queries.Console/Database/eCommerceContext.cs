@@ -7,10 +7,10 @@ namespace eCommerce.API.Database {
         // Database Connection without configure enviroment
         string DBConn = "Data Source=SERVIDOR\\SQLSERVER;Initial Catalog=eCommerce;Integrated Security=True;";
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-            optionsBuilder.UseSqlServer(DBConn,
-                options => options.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery))
-                .LogTo(System.Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information)
-                .EnableSensitiveDataLogging();
+            optionsBuilder.UseSqlServer(DBConn);
+                //options => options.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery))
+                //.LogTo(System.Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information)
+                //.EnableSensitiveDataLogging();
         }
 
         // DBSets

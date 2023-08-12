@@ -185,10 +185,21 @@ eCommerceContext db = new eCommerceContext()!;
 #endregion
 
 #region SplitQuery
+//db.ChangeTracker.Clear();
+//Console.WriteLine();
+//Console.WriteLine("Lista de usuários com Split Query:");
+//User user = db.Users!.AsSplitQuery().Include(u => u.Addresses).FirstOrDefault(u => u.Id == 1);
+//Console.WriteLine($"{user!.Name} - Tel: {user.Contact?.CellPhone} - End: {user.Addresses?.Count}");
+//Console.WriteLine();
+#endregion
+
+#region Take+Skip
 db.ChangeTracker.Clear();
 Console.WriteLine();
-Console.WriteLine("Lista de usuários com Split Query:");
-User user = db.Users!.AsSplitQuery().Include(u => u.Addresses).FirstOrDefault(u => u.Id == 1);
-Console.WriteLine($"{user!.Name} - Tel: {user.Contact?.CellPhone} - End: {user.Addresses?.Count}");
+Console.WriteLine("Lista de usuários com Paginação:");
+List<User> users = db.Users!.Skip(1).Take(5).ToList();
+foreach (User user in users) { 
+    Console.WriteLine($"{user!.Name} - Tel: {user.Contact?.CellPhone} - End: {user.Addresses?.Count}");
+   }
 Console.WriteLine();
 #endregion
