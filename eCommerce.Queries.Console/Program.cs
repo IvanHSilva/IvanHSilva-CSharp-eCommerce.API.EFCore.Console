@@ -1,6 +1,7 @@
 ﻿using eCommerce.API.Database;
 using eCommerce.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Globalization;
 
 // Context
@@ -194,12 +195,23 @@ eCommerceContext db = new eCommerceContext()!;
 #endregion
 
 #region Take+Skip
+//db.ChangeTracker.Clear();
+//Console.WriteLine();
+//Console.WriteLine("Lista de usuários com Paginação:");
+//List<User> users = db.Users!.Skip(1).Take(5).ToList();
+//foreach (User user in users) { 
+//    Console.WriteLine($"{user!.Name} - Tel: {user.Contact?.CellPhone} - End: {user.Addresses?.Count}");
+//   }
+//Console.WriteLine();
+#endregion
+
+#region Select
 db.ChangeTracker.Clear();
 Console.WriteLine();
-Console.WriteLine("Lista de usuários com Paginação:");
-List<User> users = db.Users!.Skip(1).Take(5).ToList();
-foreach (User user in users) { 
-    Console.WriteLine($"{user!.Name} - Tel: {user.Contact?.CellPhone} - End: {user.Addresses?.Count}");
-   }
+Console.WriteLine("Lista de usuários com Select:");
+List<User> users = db.Users!.Select(u => new User {Id = u.Id, Name = u.Name}).ToList();
+foreach (User user in users) {
+    Console.WriteLine($"{user!.Name} - Tel: {user.Contact?.CellPhone}");
+}
 Console.WriteLine();
 #endregion
